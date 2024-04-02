@@ -11,6 +11,12 @@ router.get("/", tokenHandler.verifyToken, boardController.getAll);
 router.put("/", tokenHandler.verifyToken, boardController.updatePosition);
 
 router.get(
+  "/favorites",
+  tokenHandler.verifyToken,
+  boardController.getFavourites
+);
+
+router.get(
   "/:boardId",
   param("boardId").custom((value) => {
     if (!validation.isObjectId(value)) {
@@ -22,17 +28,17 @@ router.get(
   boardController.getOne
 );
 
-router.put(
-  "/:boardId",
-  param("boardId").custom((value) => {
-    if (!validation.isObjectId(value)) {
-      return Promise.reject("invalid id");
-    } else return Promise.resolve();
-  }),
-  validation.validate,
-  tokenHandler.verifyToken,
-  boardController.update
-);
+// router.put(
+//   "/:boardId",
+//   param("boardId").custom((value) => {
+//     if (!validation.isObjectId(value)) {
+//       return Promise.reject("invalid id");
+//     } else return Promise.resolve();
+//   }),
+//   validation.validate,
+//   tokenHandler.verifyToken,
+//   boardController.update
+// );
 
 router.put(
   "/:boardId/icon",
@@ -68,6 +74,24 @@ router.delete(
   validation.validate,
   tokenHandler.verifyToken,
   boardController.delete
+);
+
+router.put(
+  "/:boardId/favorite",
+  param("boardId").custom((value) => {
+    if (!validation.isObjectId(value)) {
+      return Promise.reject("invalid id");
+    } else return Promise.resolve();
+  }),
+  validation.validate,
+  tokenHandler.verifyToken,
+  boardController.updateFavourite
+);
+
+router.put(
+  "/favorites",
+  tokenHandler.verifyToken,
+  boardController.updateFavouritePosition
 );
 
 module.exports = router;
