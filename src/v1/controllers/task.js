@@ -20,6 +20,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { taskId } = req.params;
+  console.log(req.body);
   try {
     const task = await Task.findByIdAndUpdate(taskId, { $set: req.body });
     res.status(200).json(task);
