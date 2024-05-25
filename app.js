@@ -39,4 +39,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // Mounting routes for API version 1
 app.use("/api/v1", require("./src/v1/routes"));
 
+app.get("/hello-world", (req, res) => {
+  res.json("Hello World!");
+});
+
 module.exports = app;
