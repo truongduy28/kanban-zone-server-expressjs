@@ -2,6 +2,7 @@ const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const jsonwebtoken = require("jsonwebtoken");
 const { authMsg } = require("../constants/messgae");
+const { getCurrentHost } = require("../utils/get-host");
 
 exports.register = async (req, res) => {
   const { password } = req.body;
@@ -26,7 +27,11 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({ username }).select("password username");
+    const user = await User.findOne({ username }).select(
+      "password username avatar"
+    );
+    const host = await getCurrentHost();
+    user.avatar = host + "/" + user.avatar;
     if (!user) {
       return res.status(401).json({
         errors: [

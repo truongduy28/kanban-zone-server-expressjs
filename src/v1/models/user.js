@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { schemaOptions } = require("./modelOptions");
+const { getRandomAvatar } = require("../utils/avatars");
 
 const userSchema = new mongoose.Schema(
   {
@@ -12,6 +13,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
+    },
+    avatar: {
+      type: String,
+      default: getRandomAvatar(),
     },
   },
   schemaOptions

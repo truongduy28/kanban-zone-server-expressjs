@@ -1,6 +1,7 @@
 const jsonwebtoken = require("jsonwebtoken");
 const User = require("../models/user");
 const { authMsg } = require("../constants/messgae");
+const { getCurrentHost } = require("../utils/get-host");
 
 const tokenDecode = (req) => {
   const bearerHeader = req.headers["authorization"];
@@ -24,6 +25,8 @@ exports.verifyToken = async (req, res, next) => {
   const tokenDecoded = tokenDecode(req);
   if (tokenDecoded) {
     const user = await User.findById(tokenDecoded.id);
+    const host = getCurrentHost();
+    user.avatar = host + "/" + user.avatar;
     if (!user)
       return res
         .status(401)
