@@ -13,7 +13,13 @@ const app = express();
 dotenv.config();
 
 // Adding middleware for handling CORS (Cross-Origin Resource Sharing)
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  })
+);
 
 // Adding middleware for logging HTTP requests
 app.use(logger("dev"));
