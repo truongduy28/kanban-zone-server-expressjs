@@ -25,7 +25,7 @@ exports.verifyToken = async (req, res, next) => {
   const tokenDecoded = tokenDecode(req);
   if (tokenDecoded) {
     const user = await User.findById(tokenDecoded.id);
-    const host = getCurrentHost();
+    const host = getCurrentHost(req);
     user.avatar = host + "/" + user.avatar;
     if (!user)
       return res

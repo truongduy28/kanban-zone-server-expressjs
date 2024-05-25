@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ username }).select(
       "password username avatar"
     );
-    const host = await getCurrentHost();
+    const host = await getCurrentHost(req);
     user.avatar = host + "/" + user.avatar;
     if (!user) {
       return res.status(401).json({

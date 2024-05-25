@@ -1,7 +1,7 @@
 const os = require("os");
 
-function getCurrentHost() {
-  return os.hostname();
+function getCurrentHost(req) {
+  return req.get("Host");
 }
 
 module.exports = { getCurrentHost };
